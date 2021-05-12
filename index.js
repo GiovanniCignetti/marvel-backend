@@ -9,10 +9,6 @@ app.use(cors());
 
 app.get("/comics", async (req, res) => {
   try {
-    const limit = req.query.limit;
-    const skip = req.query.skip;
-    const title = req.query.title;
-
     let url = `https://lereacteur-marvel-api.herokuapp.com/comics?apiKey=${process.env.MARVEL_API_KEY}`;
     req.query.limit && (url += `&limit=${req.query.limit}`);
     req.query.skip && (url += `&skip=${req.query.skip}`);
@@ -27,10 +23,13 @@ app.get("/comics", async (req, res) => {
 
 app.get("/comics/:characterId", async (req, res) => {
   try {
+    let url = `https://lereacteur-marvel-api.herokuapp.com/comics/${req.params.characterId}?apiKey=${process.env.MARVEL_API_KEY}`;
+    req.query.limit && (url += `&limit=${req.query.limit}`);
+    req.query.skip && (url += `&skip=${req.query.skip}`);
+    req.query.title && (url += `&title=${req.query.title}`);
+
     // console.log(req.params);
-    const response = await axios.get(
-      `https://lereacteur-marvel-api.herokuapp.com/comics/${req.params.characterId}?apiKey=${process.env.MARVEL_API_KEY}`
-    );
+    const response = await axios.get(url);
     response.data && res.status(200).json(response.data);
   } catch (error) {
     res.status(400).json({ message: error.message });
