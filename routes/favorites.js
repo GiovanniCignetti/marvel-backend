@@ -1,6 +1,7 @@
 const express = require("express");
 const formidable = require("express-formidable");
 const router = express.Router();
+const axios = require("axios");
 
 const app = express();
 app.use(formidable());
@@ -18,6 +19,28 @@ router.get("/user/comics", isAuthenticated, async (req, res) => {
     const count = results.length;
 
     res.status(200).json({ count: count, favoritesComics: results });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+});
+
+// route pour récupérer 1 COMIC
+router.get("/user/comic/:id", isAuthenticated, async (req, res) => {
+  try {
+    let url = `https://lereacteur-marvel-api.herokuapp.com/comic/${req.params.id}?apiKey=${process.env.MARVEL_API_KEY}`;
+    const response = await axios.get(url);
+    response.data && res.status(200).json(response.data);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+});
+
+// route pour récupérer 1 CHARACTER
+router.get("/user/character/:id", isAuthenticated, async (req, res) => {
+  try {
+    let url = `https://lereacteur-marvel-api.herokuapp.com/character/${req.params.id}?apiKey=${process.env.MARVEL_API_KEY}`;
+    const response = await axios.get(url);
+    response.data && res.status(200).json(response.data);
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
