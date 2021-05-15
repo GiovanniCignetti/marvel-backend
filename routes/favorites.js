@@ -25,7 +25,7 @@ router.get("/user/comics", isAuthenticated, async (req, res) => {
 });
 
 // route pour récupérer 1 COMIC
-router.get("/user/comic/:id", isAuthenticated, async (req, res) => {
+router.get("/comic/:id", isAuthenticated, async (req, res) => {
   try {
     let url = `https://lereacteur-marvel-api.herokuapp.com/comic/${req.params.id}?apiKey=${process.env.MARVEL_API_KEY}`;
     const response = await axios.get(url);
@@ -36,7 +36,7 @@ router.get("/user/comic/:id", isAuthenticated, async (req, res) => {
 });
 
 // route pour récupérer 1 CHARACTER
-router.get("/user/character/:id", isAuthenticated, async (req, res) => {
+router.get("/character/:id", isAuthenticated, async (req, res) => {
   try {
     let url = `https://lereacteur-marvel-api.herokuapp.com/character/${req.params.id}?apiKey=${process.env.MARVEL_API_KEY}`;
     const response = await axios.get(url);
