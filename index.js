@@ -6,6 +6,21 @@ const app = express();
 require("dotenv").config();
 app.use(formidable());
 app.use(cors());
+const mongoose = require("mongoose");
+
+// Connexion à la BDD pour la gestion des Users et Favoris
+mongoose.connect(process.env.MONGODB_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  useCreateIndex: true,
+});
+
+// import des routes
+const userRoutes = require("./routes/user");
+app.use(userRoutes);
+
+const favoritesRoutes = require("./routes/favorites");
+app.use(favoritesRoutes);
 
 app.get("/comics", async (req, res) => {
   try {
