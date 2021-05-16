@@ -110,7 +110,7 @@ router.post(
       if (results.length === 0) {
         const newFavoritesCharactersUser = new FavoritesCharactersUser({
           id_api: req.params.id,
-          name: req.fields.title,
+          name: req.fields.name,
           description: req.fields.description,
           url: req.fields.url,
           owner: req.user,
