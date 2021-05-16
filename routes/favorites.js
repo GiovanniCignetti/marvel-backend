@@ -104,15 +104,15 @@ router.post(
       const results = await FavoritesCharactersUser.find({
         owner: req.user,
         id_api: req.params.id,
-        name: req.fields.title,
-        description: req.fields.description,
-        url: req.fields.url,
       });
 
       // Si le favoris n'existe pas, on l'ajoute
       if (results.length === 0) {
         const newFavoritesCharactersUser = new FavoritesCharactersUser({
           id_api: req.params.id,
+          name: req.fields.title,
+          description: req.fields.description,
+          url: req.fields.url,
           owner: req.user,
         });
         await newFavoritesCharactersUser.save();
